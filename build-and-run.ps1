@@ -22,7 +22,7 @@ if (-not (Test-Path -Path ".\AdventureWorksDW.bak")) {
 }
 
 # Check if required files exist
-$requiredFiles = @("Dockerfile", "restore-db.sh", "docker-compose.yml")
+$requiredFiles = @("Dockerfile", "scripts/restore-db.sh", "docker-compose.yml")
 foreach ($file in $requiredFiles) {
     if (-not (Test-Path -Path ".\$file")) {
         Write-Host "Error: Required file '$file' not found in the current directory." -ForegroundColor Red

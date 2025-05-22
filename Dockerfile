@@ -24,18 +24,21 @@ WORKDIR /opt/mssql/backup
 # Copy backup file and make it accessible
 COPY AdventureWorksDW.bak .
 
-# Copy initialization script
-COPY restore-db.sh /opt/mssql/
+# Create scripts directory
+RUN mkdir -p /opt/mssql/scripts
 
-# Ensure the script has the correct line endings and is executable
-RUN dos2unix /opt/mssql/restore-db.sh && chmod +x /opt/mssql/restore-db.sh
+# Copy initialization scripts
+COPY scripts/ /opt/mssql/scripts/
+
+# Ensure the scripts have the correct line endings and are executable
+RUN dos2unix /opt/mssql/scripts/*.sh && chmod +x /opt/mssql/scripts/*.sh
 
 # Healthcheck to determine if SQL Server is running
 HEALTHCHECK --interval=10s --timeout=5s --start-period=120s --retries=12 \
-    CMD /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "${SA_PASSWORD}" -Q "SELECT 1" || exit 1
+    CMD /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "${SA_PASSWORD}" -C -Q "SELECT 1" || exit 1
 
 # Expose SQL Server port
 EXPOSE 1433
 
 # Set the entrypoint
-ENTRYPOINT ["/bin/bash", "/opt/mssql/restore-db.sh"]
+ENTRYPOINT ["/bin/bash", "/opt/mssql/scripts/restore-db.sh"]
