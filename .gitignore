@@ -1,0 +1,24 @@
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Docker related
+.env
+.env.local
+.DS_Store
+
+# Large backup files (optional, uncomment if you don't want to track these in Git)
+# *.bak
+# *.bacpac
+
+# Docker volumes
+docker-volumes/
+
+# Built Visual Studio Code Extensions
+*.vsix

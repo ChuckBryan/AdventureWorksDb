@@ -1,0 +1,18 @@
+services:
+  sql-server:
+    build:
+      context: .
+      args:
+        - SA_PASSWORD=YourStrong!Passw0rd # Change this in production
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd # Should match the build arg
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    container_name: adventureworks-sql-server
+    restart: unless-stopped
+
+volumes:
+  sqlserver-data:
